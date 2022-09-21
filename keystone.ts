@@ -1,33 +1,67 @@
-/*
-Welcome to Keystone! This file is what keystone uses to start the app.
+import { config } from "@keystone-6/core";
+import { lists } from "./schema";
+import { withAuth, session } from "./auth";
+import dotenv from "dotenv";
 
-It looks at the default export, and expects a Keystone config object.
-
-You can find all the config options in our docs here: https://keystonejs.com/docs/apis/config
-*/
-
-import { config } from '@keystone-6/core';
-
-// Look in the schema file for how we define our lists, and how users interact with them through graphql or the Admin UI
-import { lists } from './schema';
-
-// Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
-import { withAuth, session } from './auth';
+dotenv.config();
+const {
+  S3_BUCKET_NAME: bucketName = "keystone-test",
+  S3_REGION: region = "ap-southeast-2",
+  S3_ACCESS_KEY_ID: accessKeyId = "keystone",
+  S3_SECRET_ACCESS_KEY: secretAccessKey = "keystone",
+  ASSET_BASE_URL: baseUrl = "http://localhost:3000",
+  KEYSTONE_DB_USER,
+  KEYSTONE_DB_PASSWORD,
+  MYSQL_HOST_APP,
+  KEYSTONE_DB_NAME,
+  KEYSTONE_PORT = "3001",
+} = process.env;
 
 export default withAuth(
-  // Using the config function helps typescript guide you to the available options.
   config({
-    // the db sets the database provider - we're using sqlite for the fastest startup experience
-    db: {
-      provider: 'sqlite',
-      url: 'file:./keystone.db',
+    server: {
+      port: parseInt(KEYSTONE_PORT),
+      extendExpressApp: (app) => {
+        app.get("/_version", (req, res) => {
+          res.send("v6.0.0-rc.2");
+        });
+      },
     },
-    // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
+    db: {
+      provider: "mysql",
+      url: `mysql://${KEYSTONE_DB_USER}:${KEYSTONE_DB_PASSWORD}@${MYSQL_HOST_APP}:3306/${KEYSTONE_DB_NAME}`,
+      onConnect: async (context) => {
+        /* ... */
+      },
+      // Optional advanced configuration
+      enableLogging: true,
+      useMigrations: true,
+      idField: { kind: "uuid" },
+    },
     ui: {
-      // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
     },
-    lists,
     session,
+    lists,
+    storage: {
+      my_local_images: {
+        kind: "local",
+        type: "image",
+        generateUrl: (path) => `${baseUrl}/images${path}`,
+        serverRoute: {
+          path: "/images",
+        },
+        storagePath: "public/images",
+      },
+      my_s3_files: {
+        kind: "s3",
+        type: "file",
+        bucketName,
+        region,
+        accessKeyId,
+        secretAccessKey,
+        signed: { expiry: 5000 },
+      },
+    },
   })
 );
