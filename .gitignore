@@ -1,4 +1,9 @@
 node_modules
-.keystone/admin
 keystone.db
 *.log
+public/images/*
+migrations/*
+schema.prisma
+.env
+.keystone/*
+!docker/.env
