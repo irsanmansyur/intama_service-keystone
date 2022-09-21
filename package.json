@@ -6,6 +6,7 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
+    "run-prod": "keystone build && npx prisma db push && keystone start",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {
