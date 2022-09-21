@@ -22,6 +22,7 @@ export default withAuth(
     server: {
       port: parseInt(KEYSTONE_PORT),
       extendExpressApp: (app) => {
+        app.set("trust proxy", true);
         app.get("/_version", (req, res) => {
           res.send("v6.0.0-rc.2");
         });
