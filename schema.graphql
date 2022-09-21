@@ -121,6 +121,156 @@ input PostRelateToManyForCreateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+type LandingPage {
+  id: ID!
+  headerLogo: ImageFieldOutput
+  visi: String
+  misi: String
+  about: LandingPage_about_Document
+  portofolio: LandingPage_portofolio_Document
+}
+
+type ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
+type LandingPage_about_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type LandingPage_portofolio_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input LandingPageWhereUniqueInput {
+  id: ID
+}
+
+input LandingPageWhereInput {
+  AND: [LandingPageWhereInput!]
+  OR: [LandingPageWhereInput!]
+  NOT: [LandingPageWhereInput!]
+  id: IDFilter
+  visi: StringFilter
+  misi: StringFilter
+}
+
+input LandingPageOrderByInput {
+  id: OrderDirection
+  visi: OrderDirection
+  misi: OrderDirection
+}
+
+input LandingPageUpdateInput {
+  headerLogo: ImageFieldInput
+  visi: String
+  misi: String
+  about: JSON
+  portofolio: JSON
+}
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input LandingPageUpdateArgs {
+  where: LandingPageWhereUniqueInput!
+  data: LandingPageUpdateInput!
+}
+
+input LandingPageCreateInput {
+  headerLogo: ImageFieldInput
+  visi: String
+  misi: String
+  about: JSON
+  portofolio: JSON
+}
+
+type Apply {
+  id: ID!
+  name: String
+  telpon: String
+  email: String
+  university: String
+  programStudy: String
+  cv: FileFieldOutput
+}
+
+type FileFieldOutput {
+  filename: String!
+  filesize: Int!
+  url: String!
+}
+
+input ApplyWhereUniqueInput {
+  id: ID
+}
+
+input ApplyWhereInput {
+  AND: [ApplyWhereInput!]
+  OR: [ApplyWhereInput!]
+  NOT: [ApplyWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  telpon: StringFilter
+  email: StringFilter
+  university: StringFilter
+  programStudy: StringFilter
+}
+
+input ApplyOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  telpon: OrderDirection
+  email: OrderDirection
+  university: OrderDirection
+  programStudy: OrderDirection
+}
+
+input ApplyUpdateInput {
+  name: String
+  telpon: String
+  email: String
+  university: String
+  programStudy: String
+  cv: FileFieldInput
+}
+
+input FileFieldInput {
+  upload: Upload!
+}
+
+input ApplyUpdateArgs {
+  where: ApplyWhereUniqueInput!
+  data: ApplyUpdateInput!
+}
+
+input ApplyCreateInput {
+  name: String
+  telpon: String
+  email: String
+  university: String
+  programStudy: String
+  cv: FileFieldInput
+}
+
 type Post {
   id: ID!
   title: String
@@ -258,6 +408,143 @@ input TagRelateToManyForCreateInput {
   connect: [TagWhereUniqueInput!]
 }
 
+type Career {
+  id: ID!
+  title: String
+  description: Career_description_Document
+  Requirements: Career_Requirements_Document
+  created_at: DateTime
+}
+
+type Career_description_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Career_Requirements_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input CareerWhereUniqueInput {
+  id: ID
+}
+
+input CareerWhereInput {
+  AND: [CareerWhereInput!]
+  OR: [CareerWhereInput!]
+  NOT: [CareerWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  created_at: DateTimeNullableFilter
+}
+
+input CareerOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  created_at: OrderDirection
+}
+
+input CareerUpdateInput {
+  title: String
+  description: JSON
+  Requirements: JSON
+  created_at: DateTime
+}
+
+input CareerUpdateArgs {
+  where: CareerWhereUniqueInput!
+  data: CareerUpdateInput!
+}
+
+input CareerCreateInput {
+  title: String
+  description: JSON
+  Requirements: JSON
+  created_at: DateTime
+}
+
+type Product {
+  id: ID!
+  gambar: ImageFieldOutput
+  name: String
+  description: String
+}
+
+input ProductWhereUniqueInput {
+  id: ID
+}
+
+input ProductWhereInput {
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+}
+
+input ProductOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+}
+
+input ProductUpdateInput {
+  gambar: ImageFieldInput
+  name: String
+  description: String
+}
+
+input ProductUpdateArgs {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateInput!
+}
+
+input ProductCreateInput {
+  gambar: ImageFieldInput
+  name: String
+  description: String
+}
+
+type Contact {
+  id: ID!
+  name: String
+  value: String
+}
+
+input ContactWhereUniqueInput {
+  id: ID
+}
+
+input ContactWhereInput {
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  value: StringFilter
+}
+
+input ContactOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  value: OrderDirection
+}
+
+input ContactUpdateInput {
+  name: String
+  value: String
+}
+
+input ContactUpdateArgs {
+  where: ContactWhereUniqueInput!
+  data: ContactUpdateInput!
+}
+
+input ContactCreateInput {
+  name: String
+  value: String
+}
+
 type Tag {
   id: ID!
   name: String
@@ -318,12 +605,51 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createLandingPage(data: LandingPageCreateInput!): LandingPage
+  createLandingPages(data: [LandingPageCreateInput!]!): [LandingPage]
+  updateLandingPage(
+    where: LandingPageWhereUniqueInput!
+    data: LandingPageUpdateInput!
+  ): LandingPage
+  updateLandingPages(data: [LandingPageUpdateArgs!]!): [LandingPage]
+  deleteLandingPage(where: LandingPageWhereUniqueInput!): LandingPage
+  deleteLandingPages(where: [LandingPageWhereUniqueInput!]!): [LandingPage]
+  createApply(data: ApplyCreateInput!): Apply
+  createApplies(data: [ApplyCreateInput!]!): [Apply]
+  updateApply(where: ApplyWhereUniqueInput!, data: ApplyUpdateInput!): Apply
+  updateApplies(data: [ApplyUpdateArgs!]!): [Apply]
+  deleteApply(where: ApplyWhereUniqueInput!): Apply
+  deleteApplies(where: [ApplyWhereUniqueInput!]!): [Apply]
   createPost(data: PostCreateInput!): Post
   createPosts(data: [PostCreateInput!]!): [Post]
   updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createCareer(data: CareerCreateInput!): Career
+  createCareers(data: [CareerCreateInput!]!): [Career]
+  updateCareer(where: CareerWhereUniqueInput!, data: CareerUpdateInput!): Career
+  updateCareers(data: [CareerUpdateArgs!]!): [Career]
+  deleteCareer(where: CareerWhereUniqueInput!): Career
+  deleteCareers(where: [CareerWhereUniqueInput!]!): [Career]
+  createProduct(data: ProductCreateInput!): Product
+  createProducts(data: [ProductCreateInput!]!): [Product]
+  updateProduct(
+    where: ProductWhereUniqueInput!
+    data: ProductUpdateInput!
+  ): Product
+  updateProducts(data: [ProductUpdateArgs!]!): [Product]
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteProducts(where: [ProductWhereUniqueInput!]!): [Product]
+  createContact(data: ContactCreateInput!): Contact
+  createContacts(data: [ContactCreateInput!]!): [Contact]
+  updateContact(
+    where: ContactWhereUniqueInput!
+    data: ContactUpdateInput!
+  ): Contact
+  updateContacts(data: [ContactUpdateArgs!]!): [Contact]
+  deleteContact(where: ContactWhereUniqueInput!): Contact
+  deleteContacts(where: [ContactWhereUniqueInput!]!): [Contact]
   createTag(data: TagCreateInput!): Tag
   createTags(data: [TagCreateInput!]!): [Tag]
   updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
@@ -368,6 +694,22 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  landingPages(
+    where: LandingPageWhereInput! = {}
+    orderBy: [LandingPageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [LandingPage!]
+  landingPage(where: LandingPageWhereUniqueInput!): LandingPage
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
+  applies(
+    where: ApplyWhereInput! = {}
+    orderBy: [ApplyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Apply!]
+  apply(where: ApplyWhereUniqueInput!): Apply
+  appliesCount(where: ApplyWhereInput! = {}): Int
   posts(
     where: PostWhereInput! = {}
     orderBy: [PostOrderByInput!]! = []
@@ -376,6 +718,30 @@ type Query {
   ): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
+  careers(
+    where: CareerWhereInput! = {}
+    orderBy: [CareerOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Career!]
+  career(where: CareerWhereUniqueInput!): Career
+  careersCount(where: CareerWhereInput! = {}): Int
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  product(where: ProductWhereUniqueInput!): Product
+  productsCount(where: ProductWhereInput! = {}): Int
+  contacts(
+    where: ContactWhereInput! = {}
+    orderBy: [ContactOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Contact!]
+  contact(where: ContactWhereUniqueInput!): Contact
+  contactsCount(where: ContactWhereInput! = {}): Int
   tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
