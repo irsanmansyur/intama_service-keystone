@@ -20,9 +20,20 @@ const {
 export default withAuth(
   config({
     server: {
-      port: parseInt(KEYSTONE_PORT),
+      port: Number(process.env.KEYSTONE_PORT) || 3001,
+      healthCheck: {
+        path: "/my-health-check",
+        data: () => ({
+          status: "healthy",
+          timestamp: Date.now(),
+          uptime: process.uptime(),
+        }),
+      },
       extendExpressApp: (app) => {
         app.set("trust proxy", true);
+        app.use((req, res, next) => {
+          next();
+        });
         app.get("/_version", (req, res) => {
           res.send("v6.0.0-rc.2");
         });
