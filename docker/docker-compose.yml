@@ -20,8 +20,9 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
+    command: /bin/sh -c "yarn build && npx prisma db push && yarn start"
     ports:
-      - 3000:3000
+      - ${KEYSTONE_PORT}:${KEYSTONE_PORT}
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       KEYSTONE_DB_PASSWORD: ${KEYSTONE_DB_PASSWORD:-password}

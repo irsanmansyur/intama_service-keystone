@@ -35,7 +35,7 @@ export default withAuth(
       },
       // Optional advanced configuration
       enableLogging: true,
-      useMigrations: true,
+      useMigrations: false,
       idField: { kind: "uuid" },
     },
     ui: {
