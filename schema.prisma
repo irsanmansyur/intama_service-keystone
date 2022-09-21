@@ -13,7 +13,7 @@ generator client {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String @id @default(cuid())
   name     String @default("")
   email    String @unique @default("")
   password String
@@ -21,7 +21,7 @@ model User {
 }
 
 model LandingPage {
-  id                   String  @id @default(uuid())
+  id                   String  @id @default(cuid())
   headerLogo_filesize  Int?
   headerLogo_extension String?
   headerLogo_width     Int?
@@ -34,7 +34,7 @@ model LandingPage {
 }
 
 model Apply {
-  id           String  @id @default(uuid())
+  id           String  @id @default(cuid())
   name         String  @default("")
   telpon       String  @default("")
   email        String  @default("")
@@ -45,7 +45,7 @@ model Apply {
 }
 
 model Post {
-  id          String    @id @default(uuid())
+  id          String    @id @default(cuid())
   title       String    @default("")
   status      String?   @default("draft")
   content     Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -58,7 +58,7 @@ model Post {
 }
 
 model Career {
-  id           String    @id @default(uuid())
+  id           String    @id @default(cuid())
   title        String    @default("")
   description  Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   Requirements Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -66,7 +66,7 @@ model Career {
 }
 
 model Product {
-  id               String  @id @default(uuid())
+  id               String  @id @default(cuid())
   gambar_filesize  Int?
   gambar_extension String?
   gambar_width     Int?
@@ -77,13 +77,13 @@ model Product {
 }
 
 model Contact {
-  id    String @id @default(uuid())
+  id    String @id @default(cuid())
   name  String @default("") @mysql.VarChar(20)
   value String @default("") @mysql.VarChar(288)
 }
 
 model Tag {
-  id    String @id @default(uuid())
+  id    String @id @default(cuid())
   name  String @default("")
   posts Post[] @relation("Post_tags")
 }

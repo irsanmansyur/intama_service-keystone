@@ -32,11 +32,10 @@ export default withAuth(
       url: `mysql://${KEYSTONE_DB_USER}:${KEYSTONE_DB_PASSWORD}@${MYSQL_HOST_APP}:3306/${KEYSTONE_DB_NAME}`,
       onConnect: async (context) => {
         /* ... */
+        console.log("Database connected");
       },
       // Optional advanced configuration
       enableLogging: true,
-      useMigrations: false,
-      idField: { kind: "uuid" },
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data,
