@@ -1,0 +1,5 @@
+Running Docker compose
+Linux bash = export $(cat .env) && docker-compose -f docker/docker-compose.yml up
+
+OR 
+  docker-compose --env-file .env -f docker/docker-compose.yml up
