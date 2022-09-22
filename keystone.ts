@@ -2,6 +2,7 @@ import { config } from "@keystone-6/core";
 import { lists } from "./schema";
 import { withAuth, session } from "./auth";
 import dotenv from "dotenv";
+import { cors } from "./configs/app.config";
 
 dotenv.config();
 const {
@@ -19,6 +20,7 @@ export default withAuth(
   config({
     server: {
       port: Number(process.env.KEYSTONE_PORT) || 3001,
+      cors: cors(),
       healthCheck: {
         path: "/my-health-check",
         data: () => ({
@@ -55,7 +57,7 @@ export default withAuth(
       my_local_images: {
         kind: "local",
         type: "image",
-        generateUrl: (path) => `http://localhost:${process.env.KEYSTONE_PORT}/images${path}`,
+        generateUrl: (path) => `/images${path}`,
         serverRoute: {
           path: "/images",
         },
