@@ -14,7 +14,6 @@ const {
   KEYSTONE_DB_PASSWORD,
   MYSQL_HOST_APP,
   KEYSTONE_DB_NAME,
-  KEYSTONE_PORT = "3001",
 } = process.env;
 
 export default withAuth(
@@ -30,7 +29,6 @@ export default withAuth(
         }),
       },
       extendExpressApp: (app) => {
-        app.set("trust proxy", true);
         app.use((req, res, next) => {
           next();
         });
