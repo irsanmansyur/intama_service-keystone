@@ -22,7 +22,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    command: /bin/sh -c "./run.sh && yarn build && npx prisma db push && yarn start"
+    command: /bin/sh -c "yarn build && npx prisma db push && ./run.sh && yarn start"
     ports:
       - ${KEYSTONE_PORT}:${KEYSTONE_PORT}
     environment:
