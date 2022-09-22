@@ -48,7 +48,8 @@ export default withAuth(
       enableLogging: true,
     },
     ui: {
-      isAccessAllowed: (context) => !!context.session?.data,
+      // isAccessAllowed: (context) => !!context.session?.data,
+      isAccessAllowed: (context) => true,
     },
     session,
     lists,
