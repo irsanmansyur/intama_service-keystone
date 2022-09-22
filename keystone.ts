@@ -9,7 +9,6 @@ const {
   S3_REGION: region = "ap-southeast-2",
   S3_ACCESS_KEY_ID: accessKeyId = "keystone",
   S3_SECRET_ACCESS_KEY: secretAccessKey = "keystone",
-  ASSET_BASE_URL: baseUrl = "http://localhost:3000",
   KEYSTONE_DB_USER,
   KEYSTONE_DB_PASSWORD,
   MYSQL_HOST_APP,
@@ -56,7 +55,7 @@ export default withAuth(
       my_local_images: {
         kind: "local",
         type: "image",
-        generateUrl: (path) => `${baseUrl}/images${path}`,
+        generateUrl: (path) => `http://localhost:${process.env.KEYSTONE_PORT}/images${path}`,
         serverRoute: {
           path: "/images",
         },
